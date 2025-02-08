@@ -22,6 +22,7 @@ import java.util.Collection;
 public final class ItemController {
 
     public static final String ITEM_ID = "/{id}";
+    public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
     private final ItemService service;
     private final UserService userService;
 
@@ -30,14 +31,9 @@ public final class ItemController {
         this.service = service;
         this.userService = userService;
     }
-    /*
-    @GetMapping("/get")
-    public Collection<ItemDto> getAllItems() {
-        return service.getAllItems();
-    } */ //Написан вне задания ТЗ не требует этот GET
 
     @GetMapping
-    public Collection<ItemDto> getAllItemsByOwner(@RequestHeader("X-Sharer-User-Id") Long userId) {
+    public Collection<ItemDto> getAllItemsByOwner(@RequestHeader(X_USER_ID_HEADER) Long userId) {
         log.debug("Received GET request for all items");
         return service.getAllItemsByOwner(userId);
     }
@@ -51,7 +47,7 @@ public final class ItemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ItemDto addItem(@Valid @RequestBody final Item item,
-                           @RequestHeader("X-Sharer-User-Id") Long userId) {
+                           @RequestHeader(X_USER_ID_HEADER) Long userId) {
         log.debug("Received POST request to add a item: {}", item.getName());
 
         if (!userService.userExists(userId)) {
@@ -63,7 +59,7 @@ public final class ItemController {
 
     @PatchMapping(ITEM_ID)
     public ItemDto updateItem(@RequestBody final Item item, @PathVariable("id") final long id,
-                              @RequestHeader("X-Sharer-User-Id") Long userId) {
+                              @RequestHeader(X_USER_ID_HEADER) Long userId) {
         log.debug("Received request PATCH for item update with id: {}", id);
 
         ItemDto existingItem = service.getItemById(id);
