@@ -1,8 +1,8 @@
 package ru.practicum.shareit.user;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
@@ -14,15 +14,11 @@ import java.util.Collection;
 @RestController
 @RequestMapping("/users")
 @Slf4j
+@AllArgsConstructor
 public final class UserController {
 
     public static final String USER_ID = "/{id}";
     private final UserService service;
-
-    @Autowired
-    public UserController(final UserService userService) {
-        this.service = userService;
-    }
 
     @GetMapping
     public Collection<UserDto> getAllUsers() {
@@ -44,11 +40,10 @@ public final class UserController {
     }
 
     @PatchMapping(USER_ID)
-    public UserDto updateUser(@RequestBody final User user,
+    public UserDto updateUser(@Valid @RequestBody final UserDto userDto,
                               @PathVariable("id") final long id) {
         log.debug("Received PATCH request to update a user with id: {}", id);
-        user.setId(id);
-        return service.updateUser(user);
+        return service.updateUser(id, userDto);
     }
 
     @DeleteMapping(USER_ID)
