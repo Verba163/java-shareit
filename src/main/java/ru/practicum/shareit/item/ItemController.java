@@ -90,7 +90,7 @@ public final class ItemController {
         return service.getItemById(userId, id);
     }
 
-    @PostMapping("/{item-Id}/comment")
+    @PostMapping("/{itemId}/comment")
     public CommentsDto createComment(@RequestHeader(X_USER_ID_HEADER) Long userId,
                                      @PathVariable Long itemId,
                                      @RequestBody CommentsDto commentDto) {
