@@ -1,12 +1,15 @@
 package ru.practicum.shareit.item;
 
 import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.practicum.shareit.booking.service.BookingService;
+import ru.practicum.shareit.item.dto.CommentsDto;
 import ru.practicum.shareit.item.dto.ItemDto;
+import ru.practicum.shareit.item.dto.ItemFullDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.service.ItemService;
 import ru.practicum.shareit.user.service.UserService;
@@ -16,32 +19,23 @@ import java.util.Collection;
 /**
  * TODO Sprint add-controllers.
  */
+
 @RestController
 @RequestMapping("/items")
 @Slf4j
+@AllArgsConstructor
 public final class ItemController {
 
     public static final String ITEM_ID = "/{id}";
     public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
     private final ItemService service;
     private final UserService userService;
-
-    @Autowired
-    public ItemController(ItemService service, UserService userService) {
-        this.service = service;
-        this.userService = userService;
-    }
+    private final BookingService bookingService;
 
     @GetMapping
     public Collection<ItemDto> getAllItemsByOwner(@RequestHeader(X_USER_ID_HEADER) Long userId) {
         log.debug("Received GET request for all items");
         return service.getAllItemsByOwner(userId);
-    }
-
-    @GetMapping(ITEM_ID)
-    public ItemDto getItemById(@PathVariable("id") final long id) {
-        log.debug("Received GET request for item with id {}", id);
-        return service.getItemById(id);
     }
 
     @PostMapping
@@ -51,8 +45,10 @@ public final class ItemController {
         log.debug("Received POST request to add a item: {}", item.getName());
 
         if (!userService.userExists(userId)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    String.format("User not found with ID: %d", userId));
         }
+
         item.setOwnerId(userId);
         return service.addItem(item);
     }
@@ -60,13 +56,16 @@ public final class ItemController {
     @PatchMapping(ITEM_ID)
     public ItemDto updateItem(@RequestBody final Item item, @PathVariable("id") final long id,
                               @RequestHeader(X_USER_ID_HEADER) Long userId) {
+
         log.debug("Received request PATCH for item update with id: {}", id);
 
-        ItemDto existingItem = service.getItemById(id);
+        ItemDto existingItem = service.findItemById(id);
         if (existingItem.getOwnerId() == null || !existingItem.getOwnerId().equals(userId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this item");
         }
+
         item.setId(id);
+        item.setOwnerId(existingItem.getOwnerId());
         return service.updateItem(item);
     }
 
@@ -81,6 +80,22 @@ public final class ItemController {
             @RequestParam("text") String query) {
         log.debug("Received GET request for items search with query: {}", query);
         return service.searchItemsByQuery(query.trim());
+    }
+
+    @GetMapping(ITEM_ID)
+    public ItemFullDto getItemById(@RequestHeader(X_USER_ID_HEADER) Long userId,
+                                   @PathVariable final long id) {
+        log.debug("Received GET request for items with id: {}", id);
+
+        return service.getItemById(userId, id);
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentsDto createComment(@RequestHeader(X_USER_ID_HEADER) Long userId,
+                                     @PathVariable Long itemId,
+                                     @RequestBody CommentsDto commentDto) {
+        log.debug("Received POST request for creating comments for item with ID: {}", itemId);
+        return service.createComments(userId, itemId, commentDto);
     }
 }
 
