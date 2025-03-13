@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 public class BaseClient {
     protected final RestTemplate rest;
+    public static final String SHAREIT_SERVER_URL = "${shareit-server.url}";
 
     public BaseClient(RestTemplate rest) {
         this.rest = rest;

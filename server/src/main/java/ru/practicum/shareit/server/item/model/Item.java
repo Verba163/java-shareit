@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import ru.practicum.shareit.server.booking.model.Booking;
 import ru.practicum.shareit.server.request.model.ItemRequest;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,9 +19,9 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Table(name = "items")
 public class Item {
 
@@ -40,10 +41,10 @@ public class Item {
     Boolean available;
 
     @OneToMany(mappedBy = "item")
-    Set<Comments> comments;
+    Set<Comments> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "item")
-    Set<Booking> bookings;
+    Set<Booking> bookings = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "request_id")

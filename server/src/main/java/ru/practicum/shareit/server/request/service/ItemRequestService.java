@@ -1,6 +1,6 @@
 package ru.practicum.shareit.server.request.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.server.exception.NotFoundException;
@@ -25,6 +25,7 @@ public class ItemRequestService {
     private final ItemRequestMapper itemRequestMapper;
     private final ItemService itemService;
 
+    @Transactional
     public ItemRequestDto createItemRequest(Long userId, ItemRequestDto itemRequestDto) {
 
         User requester = userRepository.findById(userId)
@@ -37,6 +38,7 @@ public class ItemRequestService {
         return itemRequestMapper.itemRequestToDtoWithItems(itemRequest, List.of());
     }
 
+    @Transactional(readOnly = true)
     public ItemRequestDto getItemRequestById(Long userId, Long requestId) {
 
         userRepository.findById(userId)
@@ -50,7 +52,7 @@ public class ItemRequestService {
         return itemRequestMapper.itemRequestToDtoWithItems(itemRequest, items);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ItemRequestDto> getAllItemRequestsByUser(Long userId) {
 
         User requester = userRepository.findById(userId)
@@ -64,7 +66,7 @@ public class ItemRequestService {
 
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ItemRequestDto> getAllItemRequests() {
 
         return itemRequestRepository.findAll().stream()

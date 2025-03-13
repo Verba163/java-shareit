@@ -25,7 +25,7 @@ public class UserService {
         return userMapper.toUserDto(addedUser);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<UserDto> getAllUsers() {
         log.info("Getting all Users");
         return userRepository.findAll().stream()
@@ -56,12 +56,12 @@ public class UserService {
         }
 
         User updatedUser = userRepository.save(existingUser);
-        log.info("User  updated successfully: {}", updatedUser);
+        log.info("User updated successfully: {}", updatedUser);
 
         return userMapper.toUserDto(updatedUser);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDto getUserById(long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("User with id %d not found", id)));

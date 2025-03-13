@@ -1,6 +1,6 @@
 package ru.practicum.shareit.server.booking.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,6 +12,7 @@ import ru.practicum.shareit.server.booking.model.enums.BookingStatus;
 import ru.practicum.shareit.server.booking.storage.BookingRepository;
 import ru.practicum.shareit.server.exception.ItemNotAvailableException;
 import ru.practicum.shareit.server.exception.NotFoundException;
+import ru.practicum.shareit.server.exception.IllegalArgumentException;
 import ru.practicum.shareit.server.exception.UserAccessException;
 import ru.practicum.shareit.server.item.model.Item;
 import ru.practicum.shareit.server.item.storage.ItemRepository;
@@ -82,7 +83,7 @@ public class BookingService {
         return bookingMapper.toBookingFullDto(updatedBooking);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<BookingFullDto> getAllBookingsByUser(Long bookerId, String state) {
         userService.getUserById(bookerId);
 
@@ -101,7 +102,7 @@ public class BookingService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Collection<BookingFullDto> getAllBookingsByOwner(Long ownerId, String state) {
         userService.getUserById(ownerId);
 
@@ -121,7 +122,7 @@ public class BookingService {
     }
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     public BookingFullDto getBookingByUserOrOwner(Long bookingId, Long userId) {
 
         Booking booking = bookingRepository.findById(bookingId)

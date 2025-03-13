@@ -20,12 +20,6 @@ public class GlobalExceptionHandler {
         return new ErrorResponse("VALIDATION ERROR", e.getMessage());
     }
 
-    @ExceptionHandler(InternalServerException.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleInternalServerException(final InternalServerException e) {
-        return new ErrorResponse("SERVER ERROR", e.getMessage());
-    }
-
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse handleItemNotAvailableException(final ItemNotAvailableException e) {

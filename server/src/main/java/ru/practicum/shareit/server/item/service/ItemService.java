@@ -1,6 +1,6 @@
 package ru.practicum.shareit.server.item.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,6 +39,7 @@ public class ItemService {
     private final CommentsRepository commentsRepository;
     private final BookingMapper bookingMapper;
 
+    @Transactional
     public CommentsDto createComments(Long userId, Long itemId, CommentsDto commentDto) {
 
         User author = userRepository.findById(userId)
@@ -58,6 +59,7 @@ public class ItemService {
                 .save(commentsMapper.toCommentsEntity(commentDto, item, author)));
     }
 
+    @Transactional(readOnly = true)
     public ItemFullDto getItemById(Long userId, Long itemId) {
 
         Item item = itemRepository.findByIdInFull(itemId).orElseThrow(() ->
@@ -74,12 +76,14 @@ public class ItemService {
         return itemFullDto;
     }
 
+    @Transactional
     private void setComments(ItemFullDto itemFullDto, Set<Comments> comments) {
         itemFullDto.setComments(comments.stream()
                 .map(commentsMapper::toCommentsDto)
                 .collect(Collectors.toSet()));
     }
 
+    @Transactional
     private void setBookings(ItemFullDto itemFullDto, Set<Booking> bookings) {
 
         itemFullDto.setLastBooking(
@@ -101,6 +105,7 @@ public class ItemService {
         );
     }
 
+    @Transactional
     public ItemDto addItem(Long ownerId, ItemDto itemDto) {
         ItemRequest itemRequest = Optional.ofNullable(itemDto.getRequestId())
                 .flatMap(itemRequestRepository::findById)
@@ -130,12 +135,14 @@ public class ItemService {
         return itemMapper.toItemDto(updatedItem);
     }
 
+    @Transactional
     public void deleteItem(long id) {
         Item existingItem = itemRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Item with id %d not found", id)));
         itemRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     public Collection<ItemDto> getAllItemsByOwner(Long userId) {
         return itemRepository.findAll().stream()
                 .filter(item -> item.getOwnerId() != null && item.getOwnerId().equals(userId))
@@ -143,6 +150,7 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public Collection<ItemDto> searchItemsByQuery(String query) {
         if (query == null || query.isEmpty()) {
             log.debug("Request field is empty");
@@ -157,11 +165,13 @@ public class ItemService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
     public ItemDto findItemById(Long id) {
         return itemMapper.toItemDto(itemRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(String.format("Item with id %d not found", id))));
     }
 
+    @Transactional(readOnly = true)
     public List<ItemDto> getItemsByRequestId(Long requestId) {
         return itemRepository.findByRequestId(requestId).stream()
                 .map(itemMapper::toItemDto)
