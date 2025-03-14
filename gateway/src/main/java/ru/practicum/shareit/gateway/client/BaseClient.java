@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 public class BaseClient {
     protected final RestTemplate rest;
     public static final String SHAREIT_SERVER_URL = "${shareit-server.url}";
+    public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
 
     public BaseClient(RestTemplate rest) {
         this.rest = rest;
@@ -101,7 +102,7 @@ public class BaseClient {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         if (userId != null) {
-            headers.set("X-Sharer-User-Id", String.valueOf(userId));
+            headers.set(X_USER_ID_HEADER, String.valueOf(userId));
         }
         return headers;
     }

@@ -17,6 +17,8 @@ import ru.practicum.shareit.gateway.booking.dto.BookingDto;
 public final class BookingController {
 
     public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
+    public static final String BOOKING_ID_PATH = "/{booking-Id}";
+    public static final String BOOKING_ID = "booking-Id";
     private final BookingClient bookingClient;
 
     @PostMapping
@@ -27,16 +29,16 @@ public final class BookingController {
         return bookingClient.addBooking(bookingDto, userId);
     }
 
-    @PatchMapping("/{bookingId}")
-    public ResponseEntity<Object> changeBookingStatus(@PathVariable Long bookingId,
+    @PatchMapping(BOOKING_ID_PATH)
+    public ResponseEntity<Object> changeBookingStatus(@PathVariable(BOOKING_ID) Long bookingId,
                                                       @RequestHeader(X_USER_ID_HEADER) Long userId,
                                                       @RequestParam Boolean approved) {
         log.debug("Received PATCH request to change booking status for booking ID: {}", bookingId);
         return bookingClient.changeBookingStatus(userId, bookingId, approved);
     }
 
-    @GetMapping("/{bookingId}")
-    public ResponseEntity<Object> getBookingByUserOrOwner(@PathVariable Long bookingId,
+    @GetMapping(BOOKING_ID_PATH)
+    public ResponseEntity<Object> getBookingByUserOrOwner(@PathVariable(BOOKING_ID) Long bookingId,
                                                           @RequestHeader(X_USER_ID_HEADER) Long userId) {
         return bookingClient.getBookingById(bookingId, userId);
     }

@@ -20,6 +20,8 @@ import java.util.List;
 public class ItemRequestController {
     ItemRequestService itemRequestService;
     public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
+    public static final String ITEM_REQUEST_ID_PATH = "/{request-Id}";
+    public static final String ITEM_REQUEST_ID = "request-Id";
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -37,9 +39,9 @@ public class ItemRequestController {
         return itemRequestService.getAllItemRequestsByUser(userId);
     }
 
-    @GetMapping("/{request-Id}")
+    @GetMapping(ITEM_REQUEST_ID_PATH)
     public ItemRequestDto getItemRequestById(@RequestHeader(X_USER_ID_HEADER) Long userId,
-                                             @PathVariable("request-Id") Long requestId) {
+                                             @PathVariable(ITEM_REQUEST_ID) Long requestId) {
 
         log.debug("Received GET request for item request with id: {}", requestId);
         return itemRequestService.getItemRequestById(userId, requestId);

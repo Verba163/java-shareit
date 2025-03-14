@@ -114,7 +114,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testAddBooking_Success() {
+    public void testAddBookingSuccess() {
         Long userId = 1L;
 
         when(userService.getUserById(userId)).thenReturn(userDto);
@@ -133,7 +133,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testAddBooking_ItemNotFound() {
+    public void testAddBookingItemNotFound() {
         Long userId = 1L;
         bookingDto.setItemId(1L);
 
@@ -148,7 +148,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testAddBooking_InvalidTime() {
+    public void testAddBookingInvalidTime() {
         Long userId = 1L;
 
         bookingDto.setStart(LocalDateTime.now().plusDays(3));
@@ -168,7 +168,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testAddBooking_ItemNotAvailable() {
+    public void testAddBookingItemNotAvailable() {
         Long userId = 1L;
 
         item.setAvailable(false);
@@ -185,7 +185,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testChangeBookingStatus_UserAccessException() {
+    public void testChangeBookingStatusUserAccessException() {
         Long bookingId = 1L;
         Long userId = 2L;
         Boolean approved = true;
@@ -204,7 +204,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testChangeBookingStatus_Success() {
+    public void testChangeBookingStatusSuccess() {
         Long bookingId = 1L;
         Long userId = 1L;
         Boolean approved = true;
@@ -231,7 +231,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void testGetBookingByUserOrOwner_Booker() {
+    public void testGetBookingByUserOrOwnerBooker() {
         Long bookingId = 1L;
         Long userId = 1L;
 
@@ -256,7 +256,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByOwner_ShouldReturnCurrentBookings_WhenStateIsCurrent() {
+    public void getAllBookingsByOwnerShouldReturnCurrentBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;
@@ -282,7 +282,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByOwner_ShouldReturnPastBookings_WhenStateIsPast() {
+    public void getAllBookingsByOwnerShouldReturnPastBookings() {
         Long bookingId = 1L;
         Long userId = 1L;
 
@@ -307,7 +307,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByOwner_ShouldReturnFutureBookings_WhenStateIsFuture() {
+    public void getAllBookingsByOwnerShouldReturnFutureBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;
@@ -333,7 +333,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByOwner_ShouldReturnPastBookings_WhenStateIsRejected() {
+    public void getAllBookingsByOwnerShouldReturnRejectedBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;
@@ -359,7 +359,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByOwner_ShouldReturnPastBookings_WhenStateIsWaiting() {
+    public void getAllBookingsByOwnerShouldReturnWaitingBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;
@@ -385,7 +385,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByUser_ShouldReturnCurrentBookings_WhenStateIsCurrent() {
+    public void getAllBookingsByUserShouldReturnCurrentBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;
@@ -411,7 +411,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByUser_ShouldReturnPastBookings_WhenStateIsPast() {
+    public void getAllBookingsByUserShouldReturnPastBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;
@@ -437,7 +437,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByUser_ShouldReturnPastBookings_WhenStateIsRejected() {
+    public void getAllBookingsByUserShouldReturnRejectedBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;
@@ -463,7 +463,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByUser_ShouldReturnPastBookings_WhenStateIsWaiting() {
+    public void getAllBookingsByUserShouldReturnWaitingBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;
@@ -489,7 +489,7 @@ public class BookingServiceTest {
     }
 
     @Test
-    public void getAllBookingsByUser_ShouldReturnFutureBookings_WhenStateIsFuture() {
+    public void getAllBookingsByUserShouldReturnFutureBookings() {
 
         Long bookingId = 1L;
         Long userId = 1L;

@@ -74,7 +74,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void deleteUser_ShouldThrowNotFoundException_WhenUserDoesNotExist() {
+    public void deleteUserShouldThrowNotFoundException() {
 
         long userId = 1L;
         when(userRepository.existsById(userId)).thenReturn(false);
@@ -113,7 +113,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testGetUserById_ShouldThrowNotFoundException() {
+    public void testGetUserByIdShouldThrowNotFoundException() {
 
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 

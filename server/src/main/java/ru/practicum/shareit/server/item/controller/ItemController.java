@@ -24,8 +24,9 @@ import java.util.Collection;
 @AllArgsConstructor
 public final class ItemController {
 
-    public static final String ITEM_ID = "/{id}";
+    public static final String ITEM_ID_PATH = "/{item-Id}";
     public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
+    public static final String ITEM_ID = "item-Id";
     private final ItemService service;
     private final UserService userService;
 
@@ -50,26 +51,27 @@ public final class ItemController {
         return service.addItem(userId, itemDto);
     }
 
-    @PatchMapping(ITEM_ID)
-    public ItemDto updateItem(@RequestBody final Item item, @PathVariable("id") final long id,
+    @PatchMapping(ITEM_ID_PATH)
+    public ItemDto updateItem(@PathVariable(ITEM_ID) Long itemId,
+                              @RequestBody final Item item,
                               @RequestHeader(X_USER_ID_HEADER) Long userId) {
 
-        log.debug("Received request PATCH for item update with id: {}", id);
+        log.debug("Received request PATCH for item update with id: {}", itemId);
 
-        ItemDto existingItem = service.findItemById(id);
+        ItemDto existingItem = service.findItemById(itemId);
         if (existingItem.getOwnerId() == null || !existingItem.getOwnerId().equals(userId)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not allowed to update this item");
         }
 
-        item.setId(id);
+        item.setId(itemId);
         item.setOwnerId(existingItem.getOwnerId());
         return service.updateItem(item);
     }
 
-    @DeleteMapping(ITEM_ID)
-    public void deleteItem(@PathVariable("id") final long id) {
-        log.debug("Received DELETE request to remove item with id {}", id);
-        service.deleteItem(id);
+    @DeleteMapping(ITEM_ID_PATH)
+    public void deleteItem(@PathVariable(ITEM_ID) Long itemId) {
+        log.debug("Received DELETE request to remove item with id {}", itemId);
+        service.deleteItem(itemId);
     }
 
     @GetMapping("/search")
@@ -79,17 +81,17 @@ public final class ItemController {
         return service.searchItemsByQuery(query.trim());
     }
 
-    @GetMapping(ITEM_ID)
+    @GetMapping(ITEM_ID_PATH)
     public ItemFullDto getItemById(@RequestHeader(X_USER_ID_HEADER) Long userId,
-                                   @PathVariable final long id) {
+                                   @PathVariable(ITEM_ID) final long id) {
         log.debug("Received GET request for items with id: {}", id);
 
         return service.getItemById(userId, id);
     }
 
-    @PostMapping("/{itemId}/comment")
+    @PostMapping("/{item-Id}/comment")
     public CommentsDto createComment(@RequestHeader(X_USER_ID_HEADER) Long userId,
-                                     @PathVariable Long itemId,
+                                     @PathVariable(ITEM_ID) Long itemId,
                                      @RequestBody CommentsDto commentDto) {
         log.debug("Received POST request for creating comments for item with ID: {}", itemId);
         return service.createComments(userId, itemId, commentDto);

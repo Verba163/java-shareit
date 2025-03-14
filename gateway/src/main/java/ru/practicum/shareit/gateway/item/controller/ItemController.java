@@ -19,8 +19,9 @@ import ru.practicum.shareit.gateway.item.dto.ItemDto;
 @AllArgsConstructor
 public final class ItemController {
 
-    public static final String ITEM_ID = "/{id}";
+    public static final String ITEM_ID_PATH = "/{item-id}";
     public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
+    public static final String ITEM_ID = "item-Id";
     private final ItemClient itemClient;
 
     @GetMapping
@@ -36,8 +37,8 @@ public final class ItemController {
         return itemClient.addItem(userId, itemDto);
     }
 
-    @PatchMapping(ITEM_ID)
-    public ResponseEntity<Object> updateItem(@RequestBody ItemDto itemDto, @PathVariable("id") final long id,
+    @PatchMapping(ITEM_ID_PATH)
+    public ResponseEntity<Object> updateItem(@RequestBody ItemDto itemDto, @PathVariable(ITEM_ID) final long id,
                                              @RequestHeader(X_USER_ID_HEADER) Long userId) {
 
         log.debug("Received request PATCH for item update with id: {}", id);
@@ -45,15 +46,15 @@ public final class ItemController {
         return itemClient.updateItem(userId, itemDto);
     }
 
-    @GetMapping(ITEM_ID)
+    @GetMapping(ITEM_ID_PATH)
     public ResponseEntity<Object> getItemById(@RequestHeader(X_USER_ID_HEADER) Long userId,
-                                              @PathVariable final long id) {
+                                              @PathVariable(ITEM_ID) final long id) {
         log.debug("Received GET request for items with id: {}", id);
         return itemClient.getItemById(userId, id);
     }
 
-    @DeleteMapping(ITEM_ID)
-    public void deleteItem(@PathVariable("id") final long id) {
+    @DeleteMapping(ITEM_ID_PATH)
+    public void deleteItem(@PathVariable(ITEM_ID) final long id) {
         log.debug("Received DELETE request to remove item with id {}", id);
         itemClient.deleteItem(id);
     }
@@ -61,14 +62,14 @@ public final class ItemController {
     @GetMapping("/search")
     public ResponseEntity<Object> searchItems(
             @RequestParam("text") String query,
-            @RequestHeader("X-Sharer-User -Id") Long userId) {
+            @RequestHeader(X_USER_ID_HEADER) Long userId) {
         log.debug("Received GET request for items search with query: {}", query);
         return itemClient.searchItemsByQuery(query.trim(), userId);
     }
 
-    @PostMapping("/{itemId}/comment")
+    @PostMapping("/{item-Id}/comment")
     public ResponseEntity<Object> createComment(@Valid @RequestHeader(X_USER_ID_HEADER) Long userId,
-                                                @PathVariable Long itemId,
+                                                @PathVariable(ITEM_ID) Long itemId,
                                                 @RequestBody CommentsDto commentDto) {
         log.debug("Received POST request for creating comments for item with ID: {}", itemId);
         return itemClient.createComment(itemId, userId, commentDto);

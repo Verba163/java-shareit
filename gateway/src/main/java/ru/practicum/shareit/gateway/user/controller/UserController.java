@@ -15,7 +15,8 @@ import ru.practicum.shareit.gateway.user.dto.UserDto;
 @RequiredArgsConstructor
 public final class UserController {
 
-    public static final String USER_ID = "/{id}";
+    public static final String USER_ID_PATH = "/{user-id}";
+    public static final String USER_ID = "user-id";
     private final UserClient userClient;
 
     @GetMapping
@@ -24,8 +25,8 @@ public final class UserController {
         return userClient.getAllUsers();
     }
 
-    @GetMapping(USER_ID)
-    public ResponseEntity<Object> getUserById(@PathVariable("id") final long id) {
+    @GetMapping(USER_ID_PATH)
+    public ResponseEntity<Object> getUserById(@PathVariable(USER_ID) final long id) {
         log.debug("Received GET request for user with id {}", id);
         return userClient.getUserById(id);
     }
@@ -36,15 +37,15 @@ public final class UserController {
         return userClient.addUser(userDto);
     }
 
-    @PatchMapping(USER_ID)
+    @PatchMapping(USER_ID_PATH)
     public ResponseEntity<Object> updateUser(@RequestBody UserDto userDto,
-                                             @PathVariable("id") Long id) {
+                                             @PathVariable(USER_ID) Long id) {
         log.debug("Received PATCH request to update a user with id: {}", id);
         return userClient.updateUser(userDto, id);
     }
 
-    @DeleteMapping(USER_ID)
-    public void deleteUser(@PathVariable("id") final long id) {
+    @DeleteMapping(USER_ID_PATH)
+    public void deleteUser(@PathVariable(USER_ID) final long id) {
         log.debug("Received DELETE request to remove user with id {}", id);
         userClient.deleteUser(id);
     }

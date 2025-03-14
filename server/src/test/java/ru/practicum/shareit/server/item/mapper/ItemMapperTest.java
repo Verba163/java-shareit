@@ -31,7 +31,7 @@ public class ItemMapperTest {
     }
 
     @Test
-    void toItemDto_ShouldConvertItemToItemDto() {
+    void toItemDtoShouldConvertItemToItemDto() {
 
         Item item = Item.builder()
                 .id(1L)
@@ -53,7 +53,7 @@ public class ItemMapperTest {
     }
 
     @Test
-    void toItemFullDto_ShouldConvertItemToItemFullDto() {
+    void toItemFullDtoShouldConvertItemToItemFullDto() {
 
         Item item = Item.builder()
                 .id(1L)
@@ -73,7 +73,7 @@ public class ItemMapperTest {
     }
 
     @Test
-    void toItemEntity_ShouldConvertItemDtoToItemEntity() {
+    void toItemEntityShouldConvertItemDtoToItemEntity() {
 
         ItemDto itemDto = ItemDto.builder()
                 .id(1L)

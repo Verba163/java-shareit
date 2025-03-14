@@ -72,7 +72,7 @@ public class BookingMapperTest {
     }
 
     @Test
-    void toBookingDto_ShouldConvertBookingToBookingDto() {
+    void toBookingDtoShouldConvertToBookingDto() {
         BookingDto result = bookingMapper.toBookingDto(booking);
 
         assertEquals(booking.getId(), result.getId(), "Booking ID should match");
@@ -84,7 +84,7 @@ public class BookingMapperTest {
     }
 
     @Test
-    void toBookingEntity_ShouldConvertBookingDtoToBookingEntity() {
+    void toBookingEntityShouldConvertToBookingEntity() {
         Booking result = bookingMapper.toBookingEntity(bookingDto);
 
         assertEquals(bookingDto.getId(), result.getId(), "BookingDto ID should match Booking ID");
@@ -94,7 +94,7 @@ public class BookingMapperTest {
     }
 
     @Test
-    void toBookingFullDto_ShouldConvertBookingToBookingFullDto() {
+    void toBookingFullDtoShouldConvertToBookingFullDto() {
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(booking.getItem().getId());
@@ -116,7 +116,7 @@ public class BookingMapperTest {
     }
 
     @Test
-    void toBookingDtoList_ShouldConvertListOfBookingsToListOfBookingFullDtos() {
+    void toBookingDtoListShouldConvertToListOfBookingFullDto() {
 
         ItemDto itemDto = new ItemDto();
         itemDto.setId(booking.getItem().getId());

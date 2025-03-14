@@ -25,7 +25,7 @@ public class ItemRequestMapperTest {
     }
 
     @Test
-    void itemRequestToDtoWithItems_ShouldConvertItemRequestToDtoWithItems() {
+    void itemRequestToDtoWithItemsShouldConvertItemRequestToDto() {
 
         User requester = User.builder().id(1L).build();
         ItemRequest itemRequest = ItemRequest.builder()
@@ -47,7 +47,7 @@ public class ItemRequestMapperTest {
     }
 
     @Test
-    void toItemRequestEntity_ShouldConvertItemRequestDtoToItemRequestEntity() {
+    void toItemRequestEntityShouldConvertToItemRequestEntity() {
 
         ItemRequestDto itemRequestDto = ItemRequestDto.builder()
                 .id(1L)
@@ -67,7 +67,7 @@ public class ItemRequestMapperTest {
     }
 
     @Test
-    void itemRequestToDto_ShouldConvertItemRequestToDto() {
+    void itemRequestToDtoShouldConvertItemRequestToDto() {
 
         User requester = User.builder().id(1L).build();
         ItemRequest itemRequest = ItemRequest.builder()

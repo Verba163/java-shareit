@@ -20,6 +20,8 @@ import java.util.Collection;
 public final class BookingController {
 
     public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
+    public static final String BOOKING_ID_PATH = "/{booking-Id}";
+    public static final String BOOKING_ID = "booking-Id";
     private final BookingService bookingService;
 
     @PostMapping
@@ -30,16 +32,16 @@ public final class BookingController {
         return bookingService.addBooking(userId, bookingDto);
     }
 
-    @PatchMapping("/{bookingId}")
-    public BookingFullDto changeBookingStatus(@PathVariable Long bookingId,
+    @PatchMapping(BOOKING_ID_PATH)
+    public BookingFullDto changeBookingStatus(@PathVariable(BOOKING_ID) Long bookingId,
                                               @RequestHeader(X_USER_ID_HEADER) Long userId,
                                               @RequestParam Boolean approved) {
         log.debug("Received PATCH request to patch a booking: {}", bookingId);
         return bookingService.changeBookingStatus(userId, bookingId, approved);
     }
 
-    @GetMapping("/{bookingId}")
-    public BookingFullDto getBookingByUserOrOwner(@PathVariable Long bookingId,
+    @GetMapping(BOOKING_ID_PATH)
+    public BookingFullDto getBookingByUserOrOwner(@PathVariable(BOOKING_ID) Long bookingId,
                                                   @RequestHeader(X_USER_ID_HEADER) Long userId) {
 
         return bookingService.getBookingByUserOrOwner(bookingId, userId);

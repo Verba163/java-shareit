@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class UserTest {
 
     @Test
-    public void builder_ShouldCreateUser() {
+    public void builderShouldCreateUser() {
 
         User user = User.builder()
                 .id(1L)
@@ -21,7 +21,7 @@ public class UserTest {
     }
 
     @Test
-    public void allArgsConstructor_ShouldCreateUser() {
+    public void allArgsConstructorShouldCreateUser() {
 
         User user = new User(1L, "Jane Doe", "jane.doe@example.com");
 
@@ -31,7 +31,7 @@ public class UserTest {
     }
 
     @Test
-    public void noArgsConstructor_ShouldCreateUserWithNullFields() {
+    public void noArgsConstructorShouldCreateUserWithNullFields() {
 
         User user = new User();
 
@@ -41,7 +41,7 @@ public class UserTest {
     }
 
     @Test
-    public void equalsAndHashCode_ShouldBeEqualByEmail() {
+    public void equalsAndHashCodeShouldBeEqualByEmail() {
         User user1 = new User(1L, "User  One", "user@example.com");
         User user2 = new User(2L, "User  Two", "user@example.com");
 
@@ -50,7 +50,7 @@ public class UserTest {
     }
 
     @Test
-    public void equalsAndHashCode_ShouldNotBeEqualByDifferentEmail() {
+    public void equalsAndHashCodeShouldNotBeEqualByDifferentEmail() {
         User user1 = new User(1L, "User  One", "user1@example.com");
         User user2 = new User(2L, "User  Two", "user2@example.com");
 

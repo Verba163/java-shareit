@@ -178,7 +178,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void getItemById_ShouldReturnItemFullDto_WhenItemExists() {
+    public void getItemByIdShouldReturnItemFullDto() {
         when(itemRepository.findByIdInFull(1L)).thenReturn(Optional.of(item));
         when(itemMapper.toItemFullDto(item)).thenReturn(itemFullDto);
 
@@ -189,7 +189,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void addItem_ShouldReturnItemDto_WhenValidInput() {
+    public void addItemShouldReturnItemDtoWhenValidInput() {
         when(itemMapper.toItemEntity(itemDto, 1L, null)).thenReturn(item);
         when(itemRepository.save(item)).thenReturn(item);
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
@@ -202,7 +202,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    public void updateItem_ShouldReturnUpdatedItemDto_WhenItemExists() {
+    public void updateItemShouldReturnUpdatedItemDtoWhenItemExists() {
         when(itemRepository.findById(1L)).thenReturn(Optional.of(item));
         when(itemRepository.save(item)).thenReturn(item);
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
@@ -215,7 +215,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    void searchItemsByQuery_ShouldReturnFilteredItems() {
+    void searchItemsByQueryShouldReturnFilteredItems() {
 
         when(itemRepository.findByNameContainingIgnoreCase("item")).thenReturn(List.of(item));
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
@@ -228,7 +228,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    void findItemById_ShouldReturnItemDtoWhenItemExists() {
+    void findItemByIdShouldReturnItemDtoWhenItemExists() {
 
         when(itemRepository.findById(1L)).thenReturn(Optional.of(item));
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
@@ -240,7 +240,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    void deleteItem_ShouldDeleteExistingItem() {
+    void deleteItemShouldDeleteExistingItem() {
 
         when(itemRepository.findById(1L)).thenReturn(Optional.of(item));
 
@@ -250,7 +250,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    void getAllItemsByOwner_ShouldReturnItemsForOwner() {
+    void getAllItemsByOwnerShouldReturnItemsForOwner() {
 
         item.setOwnerId(2L);
         when(itemRepository.findAll()).thenReturn(List.of(item));
@@ -264,7 +264,7 @@ public class ItemServiceTest {
     }
 
     @Test
-    void getItemsByRequestId_ShouldReturnItemDtoList() {
+    void getItemsByRequestIdShouldReturnItemDtoList() {
         Long requestId = 1L;
 
         when(itemRepository.findByRequestId(requestId)).thenReturn(List.of(item));

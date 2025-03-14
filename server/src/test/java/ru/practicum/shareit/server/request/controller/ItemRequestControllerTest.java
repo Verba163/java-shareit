@@ -99,9 +99,9 @@ public class ItemRequestControllerTest {
 
     @Test
     public void testGetAllItemRequests() throws Exception {
-        List<ItemRequestDto> itemRequestDtos = Collections.singletonList(new ItemRequestDto(1L, "Test Description", 1L, Collections.emptyList(), LocalDateTime.now()));
+        List<ItemRequestDto> itemRequestDto = Collections.singletonList(new ItemRequestDto(1L, "Test Description", 1L, Collections.emptyList(), LocalDateTime.now()));
 
-        when(itemRequestService.getAllItemRequests()).thenReturn(itemRequestDtos);
+        when(itemRequestService.getAllItemRequests()).thenReturn(itemRequestDto);
 
         mockMvc.perform(get("/requests/all"))
                 .andExpect(status().isOk())

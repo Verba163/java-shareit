@@ -16,7 +16,8 @@ import java.util.Collection;
 @AllArgsConstructor
 public final class UserController {
 
-    public static final String USER_ID = "/{id}";
+    public static final String USER_ID_PATH = "/{user-id}";
+    public static final String USER_ID = "user-id";
     private final UserService service;
 
     @GetMapping
@@ -25,8 +26,8 @@ public final class UserController {
         return service.getAllUsers();
     }
 
-    @GetMapping(USER_ID)
-    public UserDto getUserById(@PathVariable("id") final long id) {
+    @GetMapping(USER_ID_PATH)
+    public UserDto getUserById(@PathVariable(USER_ID) final long id) {
         log.debug("Received GET request for user with id {}", id);
         return service.getUserById(id);
     }
@@ -38,15 +39,15 @@ public final class UserController {
         return service.addUser(user);
     }
 
-    @PatchMapping(USER_ID)
+    @PatchMapping(USER_ID_PATH)
     public UserDto updateUser(@RequestBody final UserDto userDto,
-                              @PathVariable("id") final long id) {
+                              @PathVariable(USER_ID) final long id) {
         log.debug("Received PATCH request to update a user with id: {}", id);
         return service.updateUser(id, userDto);
     }
 
-    @DeleteMapping(USER_ID)
-    public void deleteUser(@PathVariable("id") final long id) {
+    @DeleteMapping(USER_ID_PATH)
+    public void deleteUser(@PathVariable(USER_ID) final long id) {
         log.debug("Received DELETE request to remove user with id {}", id);
         service.deleteUser(id);
     }

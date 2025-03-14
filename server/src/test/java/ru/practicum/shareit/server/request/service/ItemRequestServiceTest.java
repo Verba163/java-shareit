@@ -89,7 +89,7 @@ public class ItemRequestServiceTest {
     }
 
     @Test
-    void getAllItemRequests_ShouldReturnSortedItemRequests() {
+    void getAllItemRequestsShouldReturnSortedItemRequests() {
 
         when(itemRequestRepository.findAll()).thenReturn(List.of(itemRequest));
         when(itemRequestMapper.itemRequestToDto(itemRequest)).thenReturn(itemRequestDto);

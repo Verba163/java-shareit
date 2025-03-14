@@ -136,10 +136,10 @@ public class ItemService {
     }
 
     @Transactional
-    public void deleteItem(long id) {
-        Item existingItem = itemRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Item with id %d not found", id)));
-        itemRepository.deleteById(id);
+    public void deleteItem(Long itemId) {
+        Item existingItem = itemRepository.findById(itemId)
+                .orElseThrow(() -> new NotFoundException(String.format("Item with id %d not found", itemId)));
+        itemRepository.deleteById(itemId);
     }
 
     @Transactional(readOnly = true)

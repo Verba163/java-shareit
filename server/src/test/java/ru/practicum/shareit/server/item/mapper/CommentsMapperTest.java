@@ -22,7 +22,7 @@ public class CommentsMapperTest {
     }
 
     @Test
-    public void toCommentsDto_ShouldReturnCorrectCommentsDto() {
+    public void toCommentsDtoShouldReturnCorrectCommentsDto() {
 
         User author = new User(1L, "AuthorName","Test@mail.ru");
         Item item = new Item();
@@ -45,7 +45,7 @@ public class CommentsMapperTest {
     }
 
     @Test
-    public void toCommentsEntity_ShouldReturnCorrectCommentsEntity() {
+    public void toCommentsEntityShouldReturnCorrectCommentsEntity() {
 
         User author = new User(1L, "AuthorName", "Test@mail.ru");
         Item item = new Item();

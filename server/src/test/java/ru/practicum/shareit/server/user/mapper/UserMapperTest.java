@@ -17,7 +17,7 @@ public class UserMapperTest {
     }
 
     @Test
-    void toUserDto_ShouldConvertUserToUserDto() {
+    void toUserDtoShouldConvertUserToUserDto() {
 
         User user = User.builder()
                 .id(1L)
@@ -33,7 +33,7 @@ public class UserMapperTest {
     }
 
     @Test
-    void toUserEntity_ShouldConvertUserDtoToUser() {
+    void toUserEntityShouldConvertUserDtoToUser() {
 
         UserDto userDto = UserDto.builder()
                 .id(1L)

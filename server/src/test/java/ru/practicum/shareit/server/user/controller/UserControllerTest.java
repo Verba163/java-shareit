@@ -33,7 +33,7 @@ public class UserControllerTest {
     private UserController userController;
 
     @Test
-    public void getAllUsers_ShouldReturnUsersList() throws Exception {
+    public void getAllUsersShouldReturnUsersList() throws Exception {
         UserDto user1 = new UserDto(1L, "User1", "Email1@test.ru");
         UserDto user2 = new UserDto(2L, "User2", "Email2@test.ru");
         Collection<UserDto> users = Arrays.asList(user1, user2);
@@ -50,7 +50,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void getUserById_ShouldReturnUserById() throws Exception {
+    public void getUserByIdShouldReturnUserById() throws Exception {
         UserDto user = new UserDto(1L, "User1", "Email1@test.ru");
 
         when(service.getUserById(1L)).thenReturn(user);
@@ -64,7 +64,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void addUser_ShouldReturnAddedUser() throws Exception {
+    public void addUserShouldReturnAddedUser() throws Exception {
         User user = new User(1L, "User1", "Email1@test.ru");
         UserDto userDto = new UserDto(1L, "User1", "Email1@test.ru");
 
@@ -81,7 +81,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void updateUser_ShouldUpdateUserFields() throws Exception {
+    public void updateUserShouldUpdateUserFields() throws Exception {
         UserDto updatedUserDto = new UserDto(1L, "Updated User", "Email1@test.ru");
 
         when(service.updateUser(anyLong(), any(UserDto.class))).thenReturn(updatedUserDto);
@@ -97,7 +97,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void deleteUser_ShouldDeleteDeletingUser() throws Exception {
+    public void deleteUserShouldDeleteDeletingUser() throws Exception {
         doNothing().when(service).deleteUser(1L);
 
         mockMvc.perform(delete("/users/1"))

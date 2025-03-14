@@ -48,7 +48,7 @@ public class ItemControllerTest {
         when(itemService.getAllItemsByOwner(1L)).thenReturn(Collections.emptyList());
 
         mockMvc.perform(get("/items")
-                        .header("X-Sharer-User-Id", 1L))
+                        .header(ItemController.X_USER_ID_HEADER, 1L))
                 .andExpect(status().isOk());
 
         verify(itemService, times(1)).getAllItemsByOwner(1L);
@@ -65,7 +65,7 @@ public class ItemControllerTest {
         when(itemService.addItem(any(Long.class), any(ItemDto.class))).thenReturn(itemDto);
 
         mockMvc.perform(post("/items")
-                        .header("X-Sharer-User-Id", 1L)
+                        .header(ItemController.X_USER_ID_HEADER, 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(itemDto)))
                 .andExpect(status().isCreated())
@@ -85,7 +85,7 @@ public class ItemControllerTest {
         when(itemService.updateItem(any(Item.class))).thenReturn(new ItemDto(1L, "Updated Item", "Description", 1L, true, 1L));
 
         mockMvc.perform(patch("/items/1")
-                        .header("X-Sharer-User-Id", 1L)
+                        .header(ItemController.X_USER_ID_HEADER, 1L)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(item)))
                 .andExpect(status().isOk())
