@@ -119,7 +119,7 @@ public class ItemService {
     @Transactional
     public ItemDto updateItem(Item item) {
         Item existingItem = itemRepository.findById(item.getId())
-                .orElseThrow(() -> new NotFoundException(String.format("Item with id %d not found", item.getId())));
+                .orElseThrow(() -> new NotFoundException(String.format("Item with Id %d not found", item.getId())));
 
         if (item.getName() != null) {
             existingItem.setName(item.getName());
