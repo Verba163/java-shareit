@@ -19,7 +19,7 @@ import ru.practicum.shareit.gateway.item.dto.ItemDto;
 @AllArgsConstructor
 public final class ItemController {
 
-    public static final String ITEM_ID_PATH = "/{item-id}";
+    public static final String ITEM_ID_PATH = "/{item-Id}";
     public static final String X_USER_ID_HEADER = "X-Sharer-User-Id";
     public static final String ITEM_ID = "item-Id";
     private final ItemClient itemClient;
